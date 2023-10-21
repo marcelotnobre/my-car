@@ -1,0 +1,46 @@
+<div class="container-form">
+    <mat-card appearance="outlined" [style.width.%]="80" [style.height]="500">
+        <form class="app-form">
+            <div class="form-row">
+                <mat-form-field appearance="outline" class="input-col-1">
+                    <mat-label>Nome</mat-label>
+                    <input matInput placeholder="Nome" placeholder="Nome" name="nome" [formControl]="nomeFormControl">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="input-col-2">
+                    <mat-label>Sobrenome</mat-label>
+                    <input matInput placeholder="Sobrenome" placeholder="Sobrenome" name="sobrenome"
+                        [formControl]="nomeFormControl">
+                </mat-form-field>
+            </div>
+            <div class="form-row">
+                <mat-form-field class="input-col-1" appearance="outline">
+                    <mat-label>Data de Nascimento</mat-label>
+                    <input matInput [matDatepicker]="picker">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="input-col-2">
+                    <mat-label>E-mail</mat-label>
+                    <input matInput placeholder="E-mail" name="email" [formControl]="nomeFormControl">
+                </mat-form-field>
+            </div>
+            <div class="form-row">
+                <mat-form-field appearance="outline" class="input-col-1">
+                    <mat-label>Login</mat-label>
+                    <input matInput placeholder="Login" name="login" [formControl]="nomeFormControl">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="inputs-last-row">
+                    <mat-label>Senha</mat-label>
+                    <input matInput placeholder="Sobrenome" name="senha" [formControl]="nomeFormControl">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="inputs-teste">
+                    <mat-label>Telefone</mat-label>
+                    <input matInput placeholder="Telefone" name="telefone" [formControl]="nomeFormControl">
+                </mat-form-field>
+            </div>
+            <button mat-raised-button color="primary">Salvar</button>
+            <button mat-raised-button>Cancelar</button>
+        </form>
+    </mat-card>
+</div>

@@ -1,0 +1,37 @@
+.container-form {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 10%;
+}
+
+.app-form {
+  padding: 20px;
+}
+
+.input-col-2 {
+  width: 69%;
+  margin-bottom: 5px;
+}
+
+.input-col-1 {
+  width: 30%;
+  margin-bottom: 5px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.inputs-last-row {
+  width: 30%;
+  margin-bottom: 5px;
+}
+
+.inputs-teste {
+  width: 38%;
+  margin-bottom: 5px;
+}
