@@ -20,6 +20,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 //import { MatTableDataSource, MatSort } from '@angular/material';
 import { UsersModule } from './modules/users/users.module';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,8 +33,8 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
     MatFormFieldModule,
     MatSlideToggleModule,
     MatButtonModule,
-    HttpClientModule,
     MatToolbarModule,
+    HttpClientModule,
     // MatListModule,
     // UserListComponent,
     // MatTableModule,

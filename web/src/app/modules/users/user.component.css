@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
   padding-top: 10%;
+  flex-direction: column;
 }
 
 .app-form {
@@ -34,4 +35,20 @@
 .inputs-teste {
   width: 38%;
   margin-bottom: 5px;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 180px;
+}
+
+.card-title {
+  padding-left: 20px;
+  margin-bottom: 10px;
+  height: 70px;
+  font-size: x-large;
+  font-weight: bold;
+  justify-content: center;
 }

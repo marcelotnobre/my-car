@@ -1,46 +1,51 @@
 <div class="container-form">
+    <mat-card appearance="outlined" [style.width.%]="80" [style.height]="500" class="card-title">
+        Cadastro de Usuários
+    </mat-card>
     <mat-card appearance="outlined" [style.width.%]="80" [style.height]="500">
-        <form class="app-form">
+        <form class="app-form" (submit)="submit($event)">
             <div class="form-row">
                 <mat-form-field appearance="outline" class="input-col-1">
                     <mat-label>Nome</mat-label>
-                    <input matInput placeholder="Nome" placeholder="Nome" name="nome" [formControl]="nomeFormControl">
+                    <input matInput placeholder="Nome" placeholder="Nome" name="nome" [(ngModel)]="user.firstName">
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="input-col-2">
                     <mat-label>Sobrenome</mat-label>
                     <input matInput placeholder="Sobrenome" placeholder="Sobrenome" name="sobrenome"
-                        [formControl]="nomeFormControl">
+                        [(ngModel)]="user.lastName">
                 </mat-form-field>
             </div>
             <div class="form-row">
                 <mat-form-field class="input-col-1" appearance="outline">
                     <mat-label>Data de Nascimento</mat-label>
-                    <input matInput [matDatepicker]="picker">
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="user.birthday" name="birthday">
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="input-col-2">
                     <mat-label>E-mail</mat-label>
-                    <input matInput placeholder="E-mail" name="email" [formControl]="nomeFormControl">
+                    <input matInput placeholder="E-mail" name="email" [(ngModel)]="user.email">
                 </mat-form-field>
             </div>
             <div class="form-row">
                 <mat-form-field appearance="outline" class="input-col-1">
                     <mat-label>Login</mat-label>
-                    <input matInput placeholder="Login" name="login" [formControl]="nomeFormControl">
+                    <input matInput placeholder="Login" name="login" [(ngModel)]="user.login">
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="inputs-last-row">
                     <mat-label>Senha</mat-label>
-                    <input matInput placeholder="Sobrenome" name="senha" [formControl]="nomeFormControl">
+                    <input matInput placeholder="Sobrenome" name="senha" type="password" [(ngModel)]="user.password">
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="inputs-teste">
                     <mat-label>Telefone</mat-label>
-                    <input matInput placeholder="Telefone" name="telefone" [formControl]="nomeFormControl">
+                    <input matInput placeholder="Telefone" name="telefone" [(ngModel)]="user.phone">
                 </mat-form-field>
             </div>
-            <button mat-raised-button color="primary">Salvar</button>
-            <button mat-raised-button>Cancelar</button>
+            <div class="actions">
+                <button mat-raised-button color="primary">Salvar</button>
+                <button mat-raised-button>Cancelar</button>
+            </div>
         </form>
     </mat-card>
 </div>

@@ -9,6 +9,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [UserComponent],
@@ -21,7 +22,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatGridListModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    MatButtonModule
+    MatButtonModule,
+    FormsModule
   ]
 })
 export class UsersModule { }
