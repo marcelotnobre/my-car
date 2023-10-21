@@ -10,9 +10,11 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
-
+import { MatTableModule } from '@angular/material/table';
+import { UsersListComponent } from './users-list/users-list.component';
+import { MatIconModule } from '@angular/material/icon';
 @NgModule({
-  declarations: [UserComponent],
+  declarations: [UserComponent, UsersListComponent],
   imports: [
     CommonModule,
     MatCardModule,
@@ -23,7 +25,9 @@ import { FormsModule } from '@angular/forms';
     MatNativeDateModule,
     MatDatepickerModule,
     MatButtonModule,
-    FormsModule
+    FormsModule,
+    MatTableModule,
+    MatIconModule
   ]
 })
 export class UsersModule { }

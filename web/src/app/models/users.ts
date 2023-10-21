@@ -1,4 +1,5 @@
 export default interface User {
+    id: number | undefined,
     firstName: String;
     lastName: String
     email: String;

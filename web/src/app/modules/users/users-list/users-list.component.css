@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 10%;
+}
+
+.card-title {
+  padding-left: 20px;
+  margin-bottom: 10px;
+  height: 70px;
+  font-size: x-large;
+  font-weight: bold;
+  justify-content: center;
+}
+
+.list-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}

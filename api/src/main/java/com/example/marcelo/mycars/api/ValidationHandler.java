@@ -20,7 +20,7 @@ public class ValidationHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-        String errorMessage = "Error message";
+        String errorMessage = "Invalid fields";
         Integer errorCode = 4;
         List<ObjectError> erros = ex.getBindingResult()
                 .getAllErrors().stream().map(err -> err).toList();
