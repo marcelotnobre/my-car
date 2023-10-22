@@ -14,19 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/signin")
 public class SigninController {
 
-    @Autowired
-    AuthenticationManager manager;
+    //@Autowired
+    //AuthenticationManager manager;
 
     @PostMapping
     public ResponseEntity<Void> signin(@RequestBody UserSigninDTO user) {
         var userNamePassword = new UsernamePasswordAuthenticationToken(user.getLogin(), user.getPassword());
-       try {
-           var auth = this.manager.authenticate(userNamePassword);
-           boolean teste = auth.isAuthenticated();
-           System.out.println("");
-       }catch (Exception e) {
-
-       }
+        try {
+            //var auth = this.manager.authenticate(userNamePassword);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return ResponseEntity.ok().build();
     }
 }
