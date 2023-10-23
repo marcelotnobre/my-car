@@ -33,17 +33,14 @@ public class TokenService {
         }
     }
 
-    public String validateToken(String token) {
-        try {
-            Algorithm auAlgorithm = Algorithm.HMAC256(secret);
-            return JWT.require(auAlgorithm)
-                    .withIssuer(EMISSOR)
-                    .build()
-                    .verify(token)
-                    .getSubject();
-        } catch (JWTVerificationException exception) {
-            return "";
-        }
+    public String validateToken(String token) throws JWTVerificationException {
+        Algorithm auAlgorithm = Algorithm.HMAC256(secret);
+        return JWT.require(auAlgorithm)
+                .withIssuer(EMISSOR)
+                .build()
+                .verify(token)
+                .getSubject();
+
     }
 
     private Instant generationExpirationDate() {

@@ -15,9 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-
 @RestController
 @RequestMapping("/signin")
 public class SigninController {
@@ -40,8 +37,7 @@ public class SigninController {
         var userNamePassword = new UsernamePasswordAuthenticationToken(userRequest.getLogin(), userRequest.getPassword());
         var auth = this.manager.authenticate(userNamePassword);
         var user = (User) auth.getPrincipal();
-        user.setLastLongin(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
-        userService.save(user);
+        userService.updateLastLogin(user);
 
         var token = tokenService.generateToken((User) auth.getPrincipal());
         Cookie cookie = new Cookie("Authentication", token);

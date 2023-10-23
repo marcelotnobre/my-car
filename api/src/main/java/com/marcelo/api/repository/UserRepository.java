@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 public interface UserRepository extends JpaRepository<User, Long> {
     UserDetails findByLogin(String login);
 
+    User findByEmail (String email);
+
     @Query("SELECT c FROM User u JOIN u.cars c WHERE c.id = :carId AND u.id = :userId")
     Car findCarByCarIdAndUserId(@Param("carId") Long carId, @Param("userId") Long userId);
 }
