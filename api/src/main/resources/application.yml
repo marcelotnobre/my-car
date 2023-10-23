@@ -1,3 +1,4 @@
+
 server:
   servlet:
     context-path: /api
@@ -7,7 +8,6 @@ api:
     token:
       secret: jwt-secret
 
-logging:
-  level:
-    org.springframework.security: DEBUG # Define o nÃ­vel de log para a categoria de seguranÃ§a do Spring
-
+#logging:
+#  level:
+#    org.springframework.security: DEBUG # Define o nível de log para a categoria de segurança do Spring
