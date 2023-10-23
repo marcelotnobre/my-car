@@ -28,9 +28,9 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        var token = this.recoverToken(request);
-        if (token.isPresent()) {
-            var login = tokenService.validateToken(token.get());
+        var tokenOptional = this.recoverToken(request);
+        tokenOptional.ifPresent(token -> {
+            var login = tokenService.validateToken(token);
             var userDetails = userRepository.findByLogin(login);
             var authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             try {
@@ -38,12 +38,12 @@ public class SecurityFilter extends OncePerRequestFilter {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+        });
         filterChain.doFilter(request, response);
     }
 
     private Optional<String> recoverToken(HttpServletRequest request) {
-        if (request.getCookies() == null) return null;
+        if (request.getCookies() == null) return Optional.empty();
         return Arrays.stream(request.getCookies())
                 .filter(cookie -> cookie.getName().equals("Authentication"))
                 .map(Cookie::getValue)

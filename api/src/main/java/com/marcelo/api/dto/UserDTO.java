@@ -1,5 +1,6 @@
 package com.marcelo.api.dto;
 
+import com.marcelo.api.domain.Car;
 import com.marcelo.api.domain.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -7,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class UserDTO {
@@ -29,7 +31,7 @@ public class UserDTO {
     @NotNull
     @NotBlank
     String phone;
-    //List<Car> cars;
+    List<Car> cars;
 
     public User toUser() {
         User user = new User();
@@ -40,7 +42,7 @@ public class UserDTO {
         user.setLogin(this.login);
         user.setPassword(this.password);
         user.setPhone(this.phone);
-        //user.setCars(this.cars);
+        user.setCars(this.cars);
         return user;
     }
 }
