@@ -6,6 +6,7 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
@@ -27,12 +28,11 @@ public class User implements UserDetails {
     String password;
     String phone;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id")
     List<Car> cars;
 
     private UserRole role;
-
 
     public User() {
     }

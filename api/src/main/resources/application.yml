@@ -3,11 +3,17 @@ server:
   servlet:
     context-path: /api
 
+spring:
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql=true:
+
 api:
   security:
     token:
       secret: jwt-secret
-
 #logging:
 #  level:
-#    org.springframework.security: DEBUG # Define o nível de log para a categoria de segurança do Spring
+#    org.springframework.security: DEBUG # Define o nï¿½vel de log para a categoria de seguranï¿½a do Spring

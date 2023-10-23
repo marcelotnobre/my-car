@@ -1,5 +1,6 @@
 package com.marcelo.api.services;
 
+import com.marcelo.api.domain.Car;
 import com.marcelo.api.domain.User;
 import com.marcelo.api.domain.UserRole;
 import com.marcelo.api.repository.UserRepository;
@@ -41,5 +42,9 @@ public class UserService {
     public User update(Long id, User userRequest) {
         User user = this.findById(id);
         return null;
+    }
+
+    public List<Car> findCarsByUserId(Long id) {
+        return this.userRepository.findCarsByUserId(id);
     }
 }
