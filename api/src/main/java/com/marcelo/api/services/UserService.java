@@ -2,8 +2,7 @@ package com.marcelo.api.services;
 
 import com.marcelo.api.domain.User;
 import com.marcelo.api.domain.UserRole;
-import com.marcelo.api.exceptions.EmailAlreadyExistsException;
-import com.marcelo.api.exceptions.LoginAlreadyExistsException;
+import com.marcelo.api.exceptions.AppException;
 import com.marcelo.api.repository.CarResipository;
 import com.marcelo.api.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -64,27 +63,21 @@ public class UserService {
     public User update(Long id, User userRequest) {
         this.validateEmailAndLogin(userRequest);
         var user = this.findById(id);
-//        user.setFirstName(userRequest.getFirstName());
-//        user.setLastName(userRequest.getLastName());
-//        user.setEmail(userRequest.getEmail());
-//        user.setBirthday(userRequest.getBirthday());
-//        user.setLogin(userRequest.getLogin());
-//        user.setPassword(this.encryptPassword(userRequest.getPassword()));
-//        user.setPhone(userRequest.getPhone());
-//        user.setCars(userRequest.getCars());
+
         if (userRequest.getCars() != null) {
             userRequest.getCars()
                     .forEach(this.carResipository::save);
         }
+
         return this.repository.save(userRequest);
     }
 
     private void validateEmailAndLogin(User user) {
         if (this.repository.findByEmail(user.getEmail()) != null) {
-            throw new EmailAlreadyExistsException("Email já existe");
+            throw new AppException("Email already exists", 2);
         }
         if (this.repository.findByLogin(user.getLogin()) != null) {
-            throw new LoginAlreadyExistsException("Login já existe");
+            throw new AppException("Login already exists", 3);
         }
     }
 

@@ -2,11 +2,10 @@ package com.marcelo.api.dto;
 
 import com.marcelo.api.domain.Car;
 import com.marcelo.api.domain.User;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-
+import org.hibernate.validator.constraints.Email;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -14,9 +13,12 @@ import java.util.List;
 public class UserDTO {
 
     Long id;
+    @NotNull
+    @NotBlank
     String firstName;
+    @NotNull
+    @NotBlank
     String lastName;
-    @Email
     @NotNull
     @NotBlank
     String email;

@@ -1,18 +1,13 @@
-package com.marcelo.api.domain;
+package com.marcelo.api.dto;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-@Entity
-public class Car {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class CarDTO {
     @NotNull
-    Long id;
-    @Column(name = "manufacture_year")
     Integer year;
     @NotNull
     @NotBlank
@@ -23,7 +18,4 @@ public class Car {
     @NotNull
     @NotBlank
     String color;
-
-    public Car() {
-    }
 }

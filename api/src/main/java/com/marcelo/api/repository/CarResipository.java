@@ -11,4 +11,6 @@ public interface CarResipository extends JpaRepository<Car, Long> {
 
     @Query("SELECT u.cars FROM User u WHERE u.id = :userId")
     List<Car> findCarsByUserId(@Param("userId") Long userId);
+
+    Car findByLicensePlate(String licensePlate);
 }

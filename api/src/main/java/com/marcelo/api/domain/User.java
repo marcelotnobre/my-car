@@ -1,6 +1,7 @@
 package com.marcelo.api.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,12 +22,25 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     Long id;
+    @NotNull
+    @NotBlank
     String firstName;
+    @NotNull
+    @NotBlank
     String lastName;
+    @NotNull
+    @NotBlank
     String email;
+    @NotNull
     LocalDate birthday;
+    @NotNull
+    @NotBlank
     String login;
+    @NotNull
+    @NotBlank
     String password;
+    @NotNull
+    @NotBlank
     String phone;
 
     @OneToMany(fetch = FetchType.LAZY)
@@ -35,9 +49,10 @@ public class User implements UserDetails {
 
     private UserRole role;
 
-    LocalDate creationDate;
+    @NotNull
+    private LocalDate creationDate;
 
-    LocalDateTime lastLongin;
+    private LocalDateTime lastLongin;
 
     public User() {
     }
