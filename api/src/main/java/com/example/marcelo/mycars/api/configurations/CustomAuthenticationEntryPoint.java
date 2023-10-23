@@ -23,10 +23,10 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-
+        authException.getStackTrace();
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        String jsonResponse = objectMapper.writeValueAsString("Sua mensagem de erro personalizada");
+        String jsonResponse = objectMapper.writeValueAsString("Unauthorized");
         response.getWriter().write(jsonResponse);
     }
 }

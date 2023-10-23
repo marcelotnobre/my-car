@@ -1,5 +1,6 @@
 package com.example.marcelo.mycars.api.services;
 
+import com.example.marcelo.mycars.api.domain.UserRole;
 import com.example.marcelo.mycars.api.domain.User;
 import com.example.marcelo.mycars.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ public class UserService {
     public User save(User user) {
         String encryptedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
         user.setPassword(encryptedPassword);
+        user.setRole(UserRole.ADMIN);
         return this.userRepository.save(user);
     }
 
