@@ -28,7 +28,7 @@ public class CarControlller {
     @GetMapping
     public ResponseEntity<List<Car>> findAll(Authentication authentication) {
         var user = (User) authentication.getPrincipal();
-        return ResponseEntity.ok(userService.findCarsByUserId(user.getId()));
+        return ResponseEntity.ok(carService.findCarsByUserId(user.getId()));
     }
 
     @PostMapping

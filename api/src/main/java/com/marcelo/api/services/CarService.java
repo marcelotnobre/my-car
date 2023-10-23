@@ -4,6 +4,7 @@ import com.marcelo.api.domain.Car;
 import com.marcelo.api.domain.User;
 import com.marcelo.api.repository.CarResipository;
 import com.marcelo.api.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ public class CarService {
         this.carResipository = carResipository;
     }
 
+    @Transactional
     public Car save(Car car, User user) {
         List<Car> cars = carResipository.findCarsByUserId(user.getId());
         var carSaved = this.carResipository.save(car);
@@ -30,10 +32,14 @@ public class CarService {
     }
 
     public Car findCarByCarIdAndUserId(Long id, Long idUser) {
-        return this.carResipository.findCarByCarIdAndUserId(id, idUser);
+        return this.userRepository.findCarByCarIdAndUserId(id, idUser);
     }
 
     public void delete(Long id, Long idUser) {
         this.carResipository.delete(this.findCarByCarIdAndUserId(id, idUser));
+    }
+
+    public List<Car> findCarsByUserId(Long userId) {
+        return this.carResipository.findCarsByUserId(userId);
     }
 }

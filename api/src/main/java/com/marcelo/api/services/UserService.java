@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -22,7 +23,8 @@ public class UserService {
     public User save(User user) {
         String encryptedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
         user.setPassword(encryptedPassword);
-        user.setRole(UserRole.ADMIN);
+        user.setRole(UserRole.USER);
+        user.setCreationDT(LocalDate.now());
         return this.userRepository.save(user);
     }
 
@@ -42,9 +44,5 @@ public class UserService {
     public User update(Long id, User userRequest) {
         User user = this.findById(id);
         return null;
-    }
-
-    public List<Car> findCarsByUserId(Long id) {
-        return this.userRepository.findCarsByUserId(id);
     }
 }
