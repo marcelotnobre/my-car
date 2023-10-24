@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -37,7 +39,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (this.requiresAuthentication(request)) {
+        if (this.noRequiresAuthentication(request)) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -53,6 +55,8 @@ public class SecurityFilter extends OncePerRequestFilter {
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write(jsonResponse);
                 response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                filterChain.doFilter(request, response);
+                return;
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -83,10 +87,13 @@ public class SecurityFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private boolean requiresAuthentication(HttpServletRequest request) {
-        List<String> publicRoutes = List.of("/api/users", "/api/signin");
-        boolean t = publicRoutes.contains(request.getRequestURI());
-        return publicRoutes.contains(request.getRequestURI());
+    private boolean noRequiresAuthentication(HttpServletRequest request) {
+        List<RequestMatcher> publicRoutes = List.of(
+                new AntPathRequestMatcher("/users"),
+                new AntPathRequestMatcher("/signin"),
+                new AntPathRequestMatcher("/swagger-ui/**"),
+                new AntPathRequestMatcher("/v3/api-docs/**"));
+        return publicRoutes.stream().anyMatch(route -> route.matches(request));
     }
 
     private Optional<String> recoverToken(HttpServletRequest request) {

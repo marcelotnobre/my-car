@@ -1,5 +1,6 @@
 package com.marcelo.api.security;
 
+import com.marcelo.api.AppAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,10 +21,11 @@ public class SecurityConfig {
 
     private final SecurityFilter securityFilter;
 
+    private final AppAuthenticationEntryPoint appAuthenticationEntryPoint;
 
-    @Autowired
-    public SecurityConfig(SecurityFilter securityFilter) {
+    public SecurityConfig(SecurityFilter securityFilter, AppAuthenticationEntryPoint appAuthenticationEntryPoint) {
         this.securityFilter = securityFilter;
+        this.appAuthenticationEntryPoint = appAuthenticationEntryPoint;
     }
 
     @Bean
@@ -36,6 +38,7 @@ public class SecurityConfig {
                         .anyRequest()
                         .authenticated()
                 )
+                .exceptionHandling(e -> e.authenticationEntryPoint(appAuthenticationEntryPoint))
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

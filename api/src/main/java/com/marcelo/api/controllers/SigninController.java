@@ -1,6 +1,7 @@
 package com.marcelo.api.controllers;
 
 import com.marcelo.api.domain.User;
+import com.marcelo.api.dto.MessageDTO;
 import com.marcelo.api.dto.UserSigninDTO;
 import com.marcelo.api.services.TokenService;
 import com.marcelo.api.services.UserService;
@@ -32,18 +33,21 @@ public class SigninController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> signin(@RequestBody UserSigninDTO userRequest, HttpServletResponse response) {
+    public ResponseEntity signin(@RequestBody UserSigninDTO userRequest, HttpServletResponse response) {
+        try {
+            var userNamePassword = new UsernamePasswordAuthenticationToken(userRequest.getLogin(), userRequest.getPassword());
+            var auth = this.manager.authenticate(userNamePassword);
+            var user = (User) auth.getPrincipal();
+            userService.updateLastLogin(user);
 
-        var userNamePassword = new UsernamePasswordAuthenticationToken(userRequest.getLogin(), userRequest.getPassword());
-        var auth = this.manager.authenticate(userNamePassword);
-        var user = (User) auth.getPrincipal();
-        userService.updateLastLogin(user);
-
-        var token = tokenService.generateToken((User) auth.getPrincipal());
-        Cookie cookie = new Cookie("Authentication", token);
-        cookie.setHttpOnly(true);
-        response.addCookie(cookie);
-        return ResponseEntity.ok()
-                .build();
+            var token = tokenService.generateToken((User) auth.getPrincipal());
+            Cookie cookie = new Cookie("Authentication", token);
+            cookie.setHttpOnly(true);
+            response.addCookie(cookie);
+            return ResponseEntity.ok()
+                    .build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new MessageDTO("Invalid login or password", 1));
+        }
     }
 }
