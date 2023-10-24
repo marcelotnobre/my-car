@@ -14,12 +14,12 @@ import java.util.List;
 @Service
 public class CarService {
     private final CarResipository repository;
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public CarService(CarResipository repository) {
+    public CarService(CarResipository repository, UserRepository userRepository) {
         this.repository = repository;
+        this.userRepository = userRepository;
     }
 
     @Transactional
