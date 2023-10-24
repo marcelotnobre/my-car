@@ -89,7 +89,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     private boolean noRequiresAuthentication(HttpServletRequest request) {
         List<RequestMatcher> publicRoutes = List.of(
-                new AntPathRequestMatcher("/users"),
+                new AntPathRequestMatcher("/users/**"),
                 new AntPathRequestMatcher("/signin"),
                 new AntPathRequestMatcher("/swagger-ui/**"),
                 new AntPathRequestMatcher("/v3/api-docs/**"));

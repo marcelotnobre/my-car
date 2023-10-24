@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class UserResponseDTO {
@@ -17,6 +18,7 @@ public class UserResponseDTO {
     private String phone;
     private LocalDate creationDate;
     private LocalDateTime lastLongin;
+    private List<CarDTO> cars;
 
     public static UserResponseDTO toUserResponseDTO(User user) {
         if (user == null) return null;
@@ -30,6 +32,9 @@ public class UserResponseDTO {
         dto.setPhone(user.getPhone());
         dto.setCreationDate(user.getCreationDate());
         dto.setLastLongin(user.getLastLongin());
+        if (user.getCars() != null) {
+            dto.setCars(user.getCars().stream().map(CarDTO::fromCar).toList());
+        }
         return dto;
     }
 }

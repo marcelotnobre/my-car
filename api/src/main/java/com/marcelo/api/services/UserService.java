@@ -32,7 +32,6 @@ public class UserService {
         this.validateEmailAndLogin(user);
         user.setPassword(this.encryptPassword(user.getPassword()));
         user.setRole(UserRole.USER);
-        user.setCreationDate(LocalDate.now());
         if (user.getCars() != null) {
             user.getCars().forEach(carResipository::save);
         }
@@ -49,7 +48,7 @@ public class UserService {
 
     public User findById(Long id) {
         return this.repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+                .orElseThrow(() -> new RuntimeException("User not Found"));
     }
 
     @Transactional
@@ -59,24 +58,24 @@ public class UserService {
         this.repository.delete(this.findById(id));
     }
 
-    @Transactional
-    public User update(Long id, User userRequest) {
-        this.validateEmailAndLogin(userRequest);
-        var user = this.findById(id);
-
-        if (userRequest.getCars() != null) {
-            userRequest.getCars()
-                    .forEach(this.carResipository::save);
-        }
-
-        return this.repository.save(userRequest);
+    public User update(User userRequest) {
+        userRequest.setCreationDate(this.findById(userRequest.getId()).getCreationDate());
+        return this.save(userRequest);
     }
 
     private void validateEmailAndLogin(User user) {
-        if (this.repository.findByEmail(user.getEmail()) != null) {
+        var userEmail = this.repository.findByEmail(user.getEmail());
+        var userLogin = this.repository.userFindByLogin(user.getLogin());
+
+        if (user.getId() != null && (userLogin.getId().compareTo(user.getId()) == 0 || userEmail.getId().compareTo(user.getId()) == 0)) {
+            return;
+        }
+
+        if (userEmail != null) {
             throw new AppException("Email already exists", 2);
         }
-        if (this.repository.findByLogin(user.getLogin()) != null) {
+
+        if (userLogin != null) {
             throw new AppException("Login already exists", 3);
         }
     }
@@ -85,5 +84,4 @@ public class UserService {
         user.setLastLongin(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
         this.repository.save(user);
     }
-
 }

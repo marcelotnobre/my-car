@@ -47,6 +47,7 @@ public class SigninController {
             return ResponseEntity.ok()
                     .build();
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new MessageDTO("Invalid login or password", 1));
         }
     }

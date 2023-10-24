@@ -26,20 +26,25 @@ public class CarControlller {
     }
 
     @GetMapping
-    public ResponseEntity<List<Car>> findAll(Authentication authentication) {
+    public ResponseEntity<List<CarDTO>> findAll(Authentication authentication) {
         var user = (User) authentication.getPrincipal();
-        return ResponseEntity.ok(service.findCarsByUserId(user.getId()));
+        return ResponseEntity
+                .ok(service
+                        .findCarsByUserId(user.getId())
+                        .stream()
+                        .map(CarDTO::fromCar)
+                        .toList());
     }
 
     @PostMapping
-    public ResponseEntity<Car> save(@RequestBody Car car, Authentication authentication) {
-        return ResponseEntity.ok(service.save(car, (User) authentication.getPrincipal()));
+    public ResponseEntity<CarDTO> save(@RequestBody Car car, Authentication authentication) {
+        return ResponseEntity.ok(CarDTO.fromCar(service.save(car, (User) authentication.getPrincipal())));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Car> findById(@PathVariable Long id, Authentication authentication) {
+    public ResponseEntity<CarDTO> findById(@PathVariable Long id, Authentication authentication) {
         var user = (User) authentication.getPrincipal();
-        return ResponseEntity.ok(service.findCarByCarIdAndUserId(id, user.getId()));
+        return ResponseEntity.ok(CarDTO.fromCar(service.findCarByCarIdAndUserId(id, user.getId())));
     }
 
     @DeleteMapping("/{id}")
@@ -49,9 +54,10 @@ public class CarControlller {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping
-    public ResponseEntity<CarDTO> update(@Valid CarDTO carDTO, Authentication authentication) {
+    @PutMapping("/{id}")
+    public ResponseEntity<CarDTO> update(@PathVariable Long id, @Valid @RequestBody CarDTO carDTO, Authentication authentication) {
         var user = (User) authentication.getPrincipal();
-        return ResponseEntity.ok(CarDTO.fromCar(this.service.save(carDTO.toCar(), user)));
+        carDTO.setId(id);
+        return ResponseEntity.ok(CarDTO.fromCar(this.service.update(user, carDTO.toCar())));
     }
 }

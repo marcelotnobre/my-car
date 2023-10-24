@@ -24,10 +24,8 @@ public class CarService {
 
     @Transactional
     public Car save(Car car, User user) {
-        if (this.repository.findByLicensePlate(car.getLicensePlate()) != null) {
-            throw new AppException("License plate already exists", 3);
-        }
 
+        this.validLicencePlate(car);
         List<Car> cars = this.repository.findCarsByUserId(user.getId());
         var carSaved = this.repository.save(car);
         cars.add(carSaved);
@@ -37,7 +35,8 @@ public class CarService {
     }
 
     public Car findCarByCarIdAndUserId(Long id, Long idUser) {
-        return this.userRepository.findCarByCarIdAndUserId(id, idUser);
+        return this.userRepository.findCarByCarIdAndUserId(id, idUser)
+                .orElseThrow(() -> new RuntimeException("Car not found"));
     }
 
     public void delete(Long id, Long idUser) {
@@ -46,5 +45,23 @@ public class CarService {
 
     public List<Car> findCarsByUserId(Long userId) {
         return this.repository.findCarsByUserId(userId);
+    }
+
+    public Car update(User user, Car car) {
+        this.findCarByCarIdAndUserId(car.getId(), user.getId());
+        return save(car, user);
+    }
+
+    private void validLicencePlate(Car car) {
+        var carDatabase = this.repository.findByLicensePlate(car.getLicensePlate());
+        if (carDatabase.isEmpty()) {
+            return;
+        }
+        if (car.getId() != null && car.getId().compareTo(carDatabase.get().getId()) == 0) {
+            return;
+        }
+        if (carDatabase != null) {
+            throw new AppException("License plate already exists", 3);
+        }
     }
 }
